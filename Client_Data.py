@@ -4,12 +4,12 @@ import pandas as pd
 
 Clients = pd.DataFrame(columns=['IP_ADDRESS', 'CLIENT_ID', 'PROFIT', 'COMMISSION'])
 
-row = {
-    "IP_ADDRESS": "TEST",
-    "CLIENT_ID": "TEST",
-    "PROFIT": "0",
-    "COMMISSION": "0"
-}
+#row = {
+#    "IP_ADDRESS": "TEST",
+#    "CLIENT_ID": "TEST",
+#    "PROFIT": "0",
+#    "COMMISSION": "0"
+#}
 
 
 def new_client(IP, ID):
@@ -40,5 +40,5 @@ def make_json():
             "COMMISSION": client["COMMISSION"][index]
         }
         json_information.push(var)
-    json.dump(json_information)
+    #json.dump(json_information)
     return json_information

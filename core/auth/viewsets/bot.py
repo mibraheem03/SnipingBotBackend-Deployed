@@ -22,8 +22,8 @@ class BotViewSet(viewsets.ViewSet, TokenRefreshView):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
     def get(self, request, *args, **kwargs):
-
-        information = make_json()
+        import Client_Data
+        information = Client_Data.make_json()
         print("Bot Data")
         print(information)
 
@@ -34,4 +34,4 @@ class BotViewSet(viewsets.ViewSet, TokenRefreshView):
         #except TokenError as e:
         #    raise InvalidToken(e.args[0])
         serializer = {"BotName": "Bot One"}
-        return Response(serializer, status=status.HTTP_200_OK)
+        return Response(information, status=status.HTTP_200_OK)
