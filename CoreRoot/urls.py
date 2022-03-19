@@ -15,9 +15,14 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-
+from django.urls import re_path
+from . import consumers
+import core
 urlpatterns = [
     # path('admin/', admin.site.urls),
     path('api/', include(('core.routers', 'core'), namespace='core-api')),
 
+]
+websocket_urlpatterns = [
+    re_path(r'ws/socket-server/', consumers.ChatConsumer.as_asgi())
 ]

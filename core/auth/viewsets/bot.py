@@ -4,6 +4,7 @@ from rest_framework.permissions import AllowAny
 from rest_framework import status
 from rest_framework import viewsets
 from rest_framework_simplejwt.exceptions import TokenError, InvalidToken
+from Client_Data import Client_Information
 
 
 class BotViewSet(viewsets.ViewSet, TokenRefreshView):
@@ -22,16 +23,19 @@ class BotViewSet(viewsets.ViewSet, TokenRefreshView):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
     def get(self, request, *args, **kwargs):
-        import Client_Data
-        information = Client_Data.make_json()
-        print("Bot Data")
-        print(information)
 
-        #serializer = self.get_serializer(data=request.data)
-#
+        global info
+        print(Client_Information.make_json())
+        print("Bot Data")
+       # print(information)
+
+        serializer = self.get_serializer(data=request.data)
+
+        #return { ID,STATUS, IP, Commission,TradedVolumne,Profit };
+        serializer = {"BotName": "Bot One"}
+        return Response(serializer, status=status.HTTP_200_OK)
         #try:
         #    serializer.is_valid(raise_exception=True)
         #except TokenError as e:
         #    raise InvalidToken(e.args[0])
-        serializer = {"BotName": "Bot One"}
-        return Response(information, status=status.HTTP_200_OK)
+        ##
