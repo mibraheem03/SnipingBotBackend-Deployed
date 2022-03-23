@@ -3,19 +3,14 @@
 import os
 import sys
 import threading
-import Client_Data
-from server import server
 
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'CoreRoot.settings')
-
     try:
         from django.core.management import execute_from_command_line
-        wst = threading.Thread(target=server.run_forever)
-        wst.daemon = True
-        wst.start()
+
     except ImportError as exc:
         raise ImportError(
             "Couldn't import Django. Are you sure it's installed and "

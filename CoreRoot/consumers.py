@@ -1,41 +1,21 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
-from Client_Data import Client_Information
+from Client_Data import new_client_into_df
 
 class ChatConsumer(WebsocketConsumer):
 
     def connect(self):
-        self.room_group_name = 'test'
-        Client_Information.new_client_into_df('TEST','TEST')
-        async_to_sync(self.channel_layer.group_add)(
-            self.room_group_name,
-            self.channel_name
-        )
-
+        print("New Bot Trying to Connect To Server")
         self.accept()
 
    
     def disconnect(self, code):
         print("User Left")
-        print(Client_Information.make_json())
+
 
     def receive(self, text_data):
-        text_data_json = json.loads(text_data)
-        message = text_data_json['message']
-
-        async_to_sync(self.channel_layer.group_send)(
-            self.room_group_name,
-            {
-                'type':'chat_message',
-                'message':message
-            }
-        )
-
-    def chat_message(self, event):
-        message = event['message']
-        self.send(text_data=json.dumps(Client_Information.make_json()))
-        self.send(text_data=json.dumps({
-            'type':'chat',
-            'message':message
-        }))
+        print("Message Recieved From Client")
+        bot_information = json.loads(text_data)
+        print(bot_information)
+        new_client_into_df(bot_information['ip'], bot_information['botId'])
