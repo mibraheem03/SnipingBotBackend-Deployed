@@ -11,11 +11,23 @@ class ChatConsumer(WebsocketConsumer):
 
    
     def disconnect(self, code):
-        print("User Left")
+        print("User Left" + str(code))
 
 
     def receive(self, text_data):
         print("Message Recieved From Client")
         bot_information = json.loads(text_data)
         print(bot_information)
-        new_client_into_df(bot_information['ip'], bot_information['botId'])
+        #Information From Client
+        '''
+            "ip": external_ip,
+            "profit": profit,
+            'IP_Address': external_ip,
+            'Client_ID': 'testingBot',
+            'Status': 'Running',
+            'Profit': profit,
+            'Comission': '0',
+            'DateStared': datetime.datetime.now(),
+            'TradedVolume': '0',
+        '''
+        new_client_into_df(bot_information)
