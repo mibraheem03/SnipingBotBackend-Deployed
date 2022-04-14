@@ -1,6 +1,13 @@
 from rest_framework.routers import SimpleRouter
 from core.user.viewsets import UserViewSet
 from core.auth.viewsets import LoginViewSet, RegistrationViewSet, RefreshViewSet, BotViewSet, ComissionViewSet
+from rest_framework.authtoken.views import obtain_auth_token  # <-- Here
+from django.urls import path
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+    TokenVerifyView
+)
 routes = SimpleRouter()
 
 # AUTHENTICATION
@@ -15,4 +22,5 @@ routes.register(r'user', UserViewSet, basename='user')
 
 urlpatterns = [
     *routes.urls
+
 ]
