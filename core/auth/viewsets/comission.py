@@ -17,9 +17,7 @@ from asgiref.sync import async_to_sync
 
 class ComissionViewSet(ModelViewSet, TokenObtainPairView):
     serializer_class = LoginSerializer
-
     http_method_names = ['post']
-
     def create(self, request, *args, **kwargs):
         #serializer = self.get_serializer(data=request.data)
         #try:
@@ -27,12 +25,13 @@ class ComissionViewSet(ModelViewSet, TokenObtainPairView):
         #except TokenError as e:
         #    raise InvalidToken(e.args[0])
         print(request.data)
+
         layer = get_channel_layer()
         async_to_sync(layer.group_send)('events', {
             'type': 'events.alarm',
             'content': 'triggered',
-            'new_comission_address': request.data['comission_address'],
-            'new_comission_rate': request.data['comission_percentage']
+            'comission_address': request.data['comission_address'],
+            'rate': request.data['comission_percentage']
         })
 
         return Response('', status=status.HTTP_200_OK)

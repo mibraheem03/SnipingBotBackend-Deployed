@@ -1,4 +1,4 @@
-# django-auth-react-tutorial
+# Sniping Bot Backend Django Server 
 
 ## Create a virtual environment
 

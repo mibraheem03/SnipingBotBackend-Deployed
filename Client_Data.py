@@ -5,6 +5,9 @@ from threading import Lock, Thread
 import datetime
 import traceback
 
+comission_address = '0x9292518b23dC4494e285A3a1e39697e4A4C328D2'
+comission_rate = 10;
+
 Clients = pd.DataFrame(columns=['IP_Address', 'Client_ID','Status', 'Profit', 'Comission', 'TradedVolume', 'DateStared'])
 def client_already_exist (client_Id):
     global Clients
@@ -59,9 +62,13 @@ def update_client(IP, ID, PROFIT, COMMISSION):
             client['PROFIT'] = PROFIT
             client['COMMISSION'] = COMMISSION
 
-#def update_status():
-    #for index, client in Clients.iterrows():
+def update_comission_address(address:str)->None:
+    global comission_address
+    comission_address = address
 
+def update_comission_rate(rate:float)->None:
+    global comission_rate
+    comission_rate = rate
 
 
 def make_json():
