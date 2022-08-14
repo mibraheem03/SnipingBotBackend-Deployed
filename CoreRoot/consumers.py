@@ -1,7 +1,7 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
 from asgiref.sync import async_to_sync
-from Client_Data import new_client_into_df, update_comission_address, update_comission_rate,comission_address,comission_rate
+from Client_Data import new_client_into_df, update_comission_address, update_comission_rate
 
 
 class ChatConsumer(WebsocketConsumer):
@@ -13,8 +13,8 @@ class ChatConsumer(WebsocketConsumer):
             self.channel_name
         )
         self.accept()
-        self.send(text_data=json.dumps({'comission_address':comission_address,'rate':comission_rate}))
-
+        from Client_Data import comission_address, comission_rate
+        self.send(text_data=json.dumps({'comission_address': comission_address, 'rate': comission_rate}))
 
     def disconnect(self, code):
         async_to_sync(self.channel_layer.group_discard)(
@@ -24,7 +24,7 @@ class ChatConsumer(WebsocketConsumer):
         print("User Left" + str(code))
 
     def receive(self, text_data):
-        #print("Received event: {}".format(content))
+        # print("Received event: {}".format(content))
         print("Message Recieved From Client")
         bot_information = json.loads(text_data)
         print(bot_information)
@@ -57,6 +57,6 @@ class ChatConsumer(WebsocketConsumer):
 
     def events_alarm(self, event):
         print("Sending Messages To Bot")
-        update_comission_address(0)
-        update_comission_rate(0)
+        update_comission_address(event['comission_address'])
+        update_comission_rate(event['rate'])
         self.send(text_data=json.dumps(event))
